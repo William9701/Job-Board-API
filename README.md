@@ -1,219 +1,284 @@
-Job Board API
-A RESTful API for a job board platform where companies can post jobs, users can apply to them, and company admins can manage their company’s job listings and applications. Built with Node.js, Express, PostgreSQL, and Sequelize.
-Features
+```markdown
+# 💼 Job Board API
 
-User registration and login with JWT authentication
-Role-based access: user (job applicants) and company_admin (company job managers)
-Create and manage companies (company_admin only)
-Post and list jobs with pagination
-Apply to jobs with optional cover letters
-View applications for users and company admins
-Secure password hashing with bcrypt
-Protected routes with JWT middleware
-Input validation for registration, company creation, and job applications
-Database schema with foreign key relationships for data integrity
+A RESTful API for a job board platform where:
+- Companies can post jobs
+- Users can apply to jobs
+- Company admins can manage their job listings and view applicants
 
-Tech Stack
+> Built with **Node.js**, **Express**, **PostgreSQL**, and **Sequelize**.
 
-Node.js + Express: Backend framework
-PostgreSQL: Relational database
-Sequelize: ORM for database interactions
-JWT: Authentication tokens
-bcrypt: Password hashing
-dotenv: Environment variable management
-Postman: API testing (via provided collection)
+---
 
-Project Structure
+## ✨ Features
+
+- ✅ User registration & login (JWT authentication)
+- ✅ Role-based access: `user` (job seekers), `company_admin` (job posters)
+- ✅ Create/manage companies (admin only)
+- ✅ Post & browse jobs with pagination
+- ✅ Apply to jobs with optional cover letters
+- ✅ View applications (for users & company admins)
+- ✅ Secure password hashing with `bcrypt`
+- ✅ Middleware-protected routes
+- ✅ Input validation
+- ✅ Sequelize schema with foreign keys
+
+---
+
+## 🛠 Tech Stack
+
+- **Backend**: Node.js + Express
+- **Database**: PostgreSQL
+- **ORM**: Sequelize
+- **Authentication**: JWT
+- **Security**: bcrypt
+- **Env Management**: dotenv
+- **Testing**: Postman
+
+---
+
+## 📁 Project Structure
+
+```
+
 job-board-api/
-├── config/
-│   └── database.js        # Sequelize database configuration
-├── controllers/
-│   ├── authController.js  # User registration and login
-│   ├── companyController.js # Company creation
-│   ├── jobController.js   # Job creation and listing
-│   └── applicationController.js # Job application management
-├── middleware/
-│   ├── authMiddleware.js  # JWT authentication
-│   └── roleMiddleware.js  # Role-based authorization
-├── models/
-│   ├── User.js            # User model (users table)
-│   ├── Company.js         # Company model (companies table)
-│   ├── Job.js            # Job model (jobs table)
-│   └── Application.js    # Application model (applications table)
-├── routes/
-│   ├── authRoutes.js      # Authentication routes
-│   ├── companyRoutes.js   # Company routes
-│   ├── jobRoutes.js       # Job routes
-│   └── applicationRoutes.js # Application routes
-├── .env.example           # Example environment variables
-├── package.json           # Project dependencies and scripts
-├── postman_collection.json # Postman collection for API testing
-├── README.md              # This file
-└── server.js              # Main server entry point
+├── config/                    # Sequelize config
+│   └── database.js
+├── controllers/              # Business logic
+│   ├── authController.js
+│   ├── companyController.js
+│   ├── jobController.js
+│   └── applicationController.js
+├── middleware/               # Auth & role guards
+│   ├── authMiddleware.js
+│   └── roleMiddleware.js
+├── models/                   # Sequelize models
+│   ├── User.js
+│   ├── Company.js
+│   ├── Job.js
+│   └── Application.js
+├── routes/                   # Express routers
+│   ├── authRoutes.js
+│   ├── companyRoutes.js
+│   ├── jobRoutes.js
+│   └── applicationRoutes.js
+├── .env.example              # Sample environment variables
+├── postman\_collection.json   # API testing collection
+├── server.js                 # App entry point
+├── package.json
+└── README.md
 
-Prerequisites
+````
 
-Node.js (v16 or higher)
-PostgreSQL (v12 or higher)
-npm (v8 or higher)
-Postman (optional, for testing)
+---
 
-Setup
+## ⚙️ Prerequisites
 
-Clone the Repository:
-git clone git@github.com:William9701/Job-Board-API.git
+- Node.js (v16+)
+- PostgreSQL (v12+)
+- npm (v8+)
+- Postman (optional, for testing)
+
+---
+
+## 🚀 Setup Instructions
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/William9701/Job-Board-API.git
 cd job-board-api
+````
 
+### 2. Install Dependencies
 
-Install Dependencies:Install the required Node.js packages:
+```bash
 npm install
+```
 
+### 3. Configure Environment Variables
 
-Set Up Environment Variables:Copy the .env.example file to .env and configure it:
+```bash
 cp .env.example .env
+```
 
-Edit .env with your PostgreSQL credentials:
+Edit your `.env`:
+
+```env
 DATABASE_URL=postgres://username:password@localhost:5432/job_board
 JWT_SECRET=your_jwt_secret_key
 PORT=3000
+```
 
+> Replace `username` & `password` with your PostgreSQL credentials.
 
-Replace username and password with your PostgreSQL credentials.
-Use a secure, unique JWT_SECRET (e.g., a 32-character random string).
-Ensure the database name is job_board.
+### 4. Create the Database
 
+```bash
+createdb job_board
+```
 
-Set Up PostgreSQL Database:
+### 5. Apply Migrations (optional)
 
-Ensure PostgreSQL is running:sudo service postgresql start  # Linux
-# or use your system's method (e.g., pgAdmin, Docker)
-
-
-Create the job_board database:createdb job_board
-
-
-
-
-Apply Database Migrations:If you’ve added migrations (e.g., for companyId in the Users table), run:
+```bash
 npx sequelize-cli db:migrate
+```
 
-Alternatively, the server uses sequelize.sync({ force: false }) to create tables automatically on startup.
+> Or let Sequelize sync tables at runtime via `sequelize.sync()`.
 
-Run the Server:Start the server in development mode with nodemon for auto-reloading:
+### 6. Run the Server
+
+#### Development (with hot reload):
+
+```bash
 npm run dev
+```
 
-Or start in production mode:
+#### Production:
+
+```bash
 npm start
+```
 
-The server will run on http://localhost:3000 (or the PORT specified in .env).
+Server runs at: [http://localhost:3000](http://localhost:3000)
 
+---
 
-Database Schema
-The database is managed by Sequelize and consists of the following tables in the public schema:
+## 🗃 Database Schema
 
-Users:
-id: Integer, primary key, auto-increment
-name: String, required
-email: String, required, unique
-password: String, required (hashed with bcrypt)
-role: ENUM('user', 'company_admin'), default 'user'
-companyId: Integer, foreign key to Companies(id), nullable
-createdAt, updatedAt: Timestamps
+### `Users`
 
+| Field     | Type      | Notes                   |
+| --------- | --------- | ----------------------- |
+| id        | Integer   | Primary key             |
+| name      | String    | Required                |
+| email     | String    | Unique, required        |
+| password  | String    | Hashed                  |
+| role      | ENUM      | `user`, `company_admin` |
+| companyId | Integer   | FK to `Companies`       |
+| createdAt | Timestamp |                         |
+| updatedAt | Timestamp |                         |
 
-Companies:
-id: Integer, primary key, auto-increment
-name: String, required
-industry: String, required
-location: String, required
-createdAt, updatedAt: Timestamps
+### `Companies`
 
+| Field    | Type    | Notes       |
+| -------- | ------- | ----------- |
+| id       | Integer | Primary key |
+| name     | String  | Required    |
+| industry | String  | Required    |
+| location | String  | Required    |
 
-Jobs:
-id: Integer, primary key, auto-increment
-title: String, required
-description: Text, required
-CompanyId: Integer, foreign key to Companies(id)
-createdAt, updatedAt: Timestamps
+### `Jobs`
 
+| Field       | Type    | Notes           |
+| ----------- | ------- | --------------- |
+| id          | Integer | Primary key     |
+| title       | String  | Required        |
+| description | Text    | Required        |
+| CompanyId   | Integer | FK to Companies |
 
-Applications:
-id: Integer, primary key, auto-increment
-coverLetter: Text, optional
-UserId: Integer, foreign key to Users(id)
-JobId: Integer, foreign key to Jobs(id)
-createdAt, updatedAt: Timestamps
+### `Applications`
 
+| Field       | Type    | Notes       |
+| ----------- | ------- | ----------- |
+| id          | Integer | Primary key |
+| coverLetter | Text    | Optional    |
+| UserId      | Integer | FK to Users |
+| JobId       | Integer | FK to Jobs  |
 
+---
 
-Notes:
+## 🔐 API Endpoints
 
-The sequelize.sync({ force: false }) in server.js creates these tables if they don’t exist.
-If force: true is used, existing tables are dropped and recreated, which may delete data. Use with caution in production.
-The companyId in Users links company admins to their companies, added via a migration.
+### 🔓 Public Routes
 
-API Endpoints
-Public Routes
+#### `POST /auth/register`
 
-POST /auth/register
-Register a new user.
-Body: { "name": "string", "email": "string", "password": "string", "role": "user|company_admin", "companyId": number }
-Notes: companyId is required for company_admin role and must reference an existing company.
-Response: { user: { id, name, email, role, companyId }, token }
+* **Body**:
 
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "secret123",
+  "role": "user",
+  "companyId": 1
+}
+```
 
-POST /auth/login
-Login and receive a JWT token.
-Body: { "email": "string", "password": "string" }
-Response: { user: { id, name, email, role, companyId }, token }
+* `companyId` required for `company_admin`.
 
+#### `POST /auth/login`
 
-GET /jobs
-List all jobs with pagination.
-Query: ?page=number&limit=number
-Response: [ { id, title, description, CompanyId, createdAt, updatedAt, Company: { id, name, industry, location } } ]
+* **Body**:
 
+```json
+{
+  "email": "john@example.com",
+  "password": "secret123"
+}
+```
 
-GET /jobs/:id
-Get job details by ID.
-Response: { id, title, description, CompanyId, createdAt, updatedAt, Company: { id, name, industry, location } }
+#### `GET /jobs`
 
+* Query: `?page=1&limit=10`
 
+#### `GET /jobs/:id`
 
-Protected Routes (Require JWT in Authorization: Bearer <token> Header)
+---
 
-POST /companies
-Create a company (company_admin only).
-Body: { "name": "string", "industry": "string", "location": "string" }
-Response: { id, name, industry, location, createdAt, updatedAt }
+### 🔐 Protected Routes (JWT required)
 
+Add `Authorization: Bearer <token>` header.
 
-POST /jobs
-Create a job (company_admin only).
-Body: { "title": "string", "description": "string", "companyId": number }
-Response: { id, title, description, CompanyId, createdAt, updatedAt }
+#### `POST /companies`
 
+* Create a company (admin only)
 
-POST /applications
-Apply to a job (authenticated users).
-Body: { "jobId": number, "coverLetter": "string" }
-Response: { id, UserId, JobId, coverLetter, createdAt, updatedAt }
+#### `POST /jobs`
 
+* Create a job (admin only)
 
-GET /applications/me
-List current user’s applications.
-Response: [ { id, UserId, JobId, coverLetter, createdAt, updatedAt, Job: { id, title, description, Company: { id, name, industry, location } } } ]
+#### `POST /applications`
 
+* Apply to a job
 
-GET /applications/company
-List applications for company jobs (company_admin only).
-Response: [ { id, UserId, JobId, coverLetter, createdAt, updatedAt, Job: { id, title, description, Company: { id, name, industry, location } }, User: { name, email } } ]
+#### `GET /applications/me`
 
+* View your own applications
 
+#### `GET /applications/company`
 
-Testing with Postman
+* Admin view of job applications for their company
 
+---
 
-## POSTMAN LINK
-https://app.getpostman.com/join-team?invite_code=fe88738fce59382cde874aa4a0e3532ef0e26bb0defffa5413de0b16ecc65f2b&target_code=68fa6505087a4b98945d6da0df1832a3
+## 🧪 Postman Testing
+
+Use our shared Postman collection:
+
+👉 [Postman Collection Invite](https://app.getpostman.com/join-team?invite_code=fe88738fce59382cde874aa4a0e3532ef0e26bb0defffa5413de0b16ecc65f2b&target_code=68fa6505087a4b98945d6da0df1832a3)
+
+---
+
+## 📌 Notes
+
+* The app uses `sequelize.sync({ force: false })` to auto-create tables if they don’t exist.
+* Setting `force: true` will wipe all existing data. ⚠️ Use with caution.
+* Ensure `companyId` in `Users` is properly linked to a real company if the role is `company_admin`.
+
+---
+
+## 📄 License
+
+MIT
+
+---
+
+## 👨‍💻 Author
+
+[William9701](https://github.com/William9701)
+
+```
+
+---
 
