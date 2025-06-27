@@ -248,9 +248,6 @@ Server runs at: [http://localhost:3000](http://localhost:3000)
 
 Add `Authorization: Bearer <token>` header.
 
-#### `POST /companies`
-
-* Create a company (admin only)
 
 #### `POST /jobs`
 
