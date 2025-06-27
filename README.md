@@ -117,13 +117,9 @@ PORT=3000
 createdb job_board
 ```
 
-### 5. Apply Migrations (optional)
+### 5.Migrations 
 
-```bash
-npx sequelize-cli db:migrate
-```
-
-> Or let Sequelize sync tables at runtime via `sequelize.sync()`.
+> let Sequelize sync tables at runtime via `sequelize.sync()`.
 
 ### 6. Run the Server
 
