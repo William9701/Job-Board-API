@@ -195,8 +195,17 @@ Server runs at: [http://localhost:3000](http://localhost:3000)
 {
   "name": "John Doe",
   "email": "john@example.com",
+  "password": "secret123"
+}
+```
+
+
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com",
   "password": "secret123",
-  "role": "user",
+  "role": "company_admin",
   "companyId": 1
 }
 ```
