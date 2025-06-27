@@ -187,6 +187,19 @@ Server runs at: [http://localhost:3000](http://localhost:3000)
 
 ### 🔓 Public Routes
 
+#### `POST /companies/`
+
+* **Body**:
+
+```json
+{
+  "name": "Material pro",
+  "Industry": "Construction Tech",
+  "location": "Lagos"
+}
+```
+* `company` required for `company_admin`.
+
 #### `POST /auth/register`
 
 * **Body**:
