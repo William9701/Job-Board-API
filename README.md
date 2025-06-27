@@ -114,7 +114,7 @@ PORT=3000
 ### 4. Create the Database
 
 ```bash
-createdb job_board
+createdb job-board
 ```
 
 ### 5.Migrations 
